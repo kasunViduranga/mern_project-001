@@ -6,16 +6,38 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    name : {
-        type: String
-    },
     password : {
         type: String,
         required: true
     },
-    Image : {
+    firstName : {
         type: String,
-        default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+        required: true
+    },
+    lastName : {
+        type: String,
+        required: true
+    },
+    type : {
+        type: String,
+        required: true,
+        default: "user"
+    },
+    whatsapp : {
+        type: String,
+        required: true
+    },
+    phone : {
+        type: String,
+        required: true
+    },
+    disabled : {
+        type: Boolean,
+        default: false
+    },
+    emailVerified : {
+        type: Boolean,
+        default: false
     }
 });
 
