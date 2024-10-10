@@ -15,12 +15,12 @@ export function getUsers(req, res) {
 export function postUser(req, res) {
 
     const user = req.body
-    const password = req.body.password;
+    // const password = req.body.password;
 
-    const saltRounds = 10;
-    const passwordHash = bcrypt.genSaltSync(password,saltRounds);
+    // const saltRounds = 10;
+    // const passwordHash = bcrypt.genSaltSync(password,saltRounds);
 
-    console.log(passwordHash);
+    // console.log(passwordHash);
 
     const newUser = new User(user);
 
@@ -28,6 +28,24 @@ export function postUser(req, res) {
         res.json({ message: "User created successfully"});
     }).catch((err) => {
         res.json({ message: "User creation failed"});
+    });
+}
+
+// login user
+export function loginUser(req, res) {
+    const credentials = req.body;
+
+    User.findOne({ email: credentials.email, password: credentials.password }).then((user) => {
+        if (user == null) {
+            return res.status(404).json({ 
+                message: "User not found" 
+            });
+        }else{
+            res.json({
+                message: "User logged in successfully",
+                user: user
+            });
+        }
     });
 }
 
