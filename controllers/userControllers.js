@@ -1,4 +1,6 @@
 import User from "../models/user.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 
 export function getUsers(req, res) {
@@ -9,9 +11,17 @@ export function getUsers(req, res) {
     });
 }
 
+// save users
 export function postUser(req, res) {
 
     const user = req.body
+    const password = req.body.password;
+
+    const saltRounds = 10;
+    const passwordHash = bcrypt.genSaltSync(password,saltRounds);
+
+    console.log(passwordHash);
+
     const newUser = new User(user);
 
     newUser.save().then((user) => {
