@@ -41,9 +41,19 @@ export function loginUser(req, res) {
                 message: "User not found" 
             });
         }else{
+
+            const payload = {
+                id: user._id,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                type: user.type
+            };
+            const token = jwt.sign(payload, "secretkey", { expiresIn: "48h" });
             res.json({
                 message: "User logged in successfully",
-                user: user
+                user: user,
+                token: token
             });
         }
     });
