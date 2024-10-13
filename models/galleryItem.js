@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-console.log("galleryItem model");
 
 const galleryItemSchema = mongoose.Schema({
     name : {

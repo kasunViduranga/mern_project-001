@@ -5,9 +5,9 @@ import jwt from "jsonwebtoken";
 
 export function getUsers(req, res) {
     User.find().then((usersList) => {
-        res.json({ list : usersList });
+        res.json({ list: usersList });
     }).catch((err) => {
-        res.json({ message: "Error fetching users"});
+        res.json({ message: "Error fetching users" });
     });
 }
 
@@ -15,19 +15,19 @@ export function getUsers(req, res) {
 export function postUser(req, res) {
 
     const user = req.body
-    // const password = req.body.password;
+    const password = req.body.password;
 
-    // const saltRounds = 10;
-    // const passwordHash = bcrypt.genSaltSync(password,saltRounds);
+    const saltRounds = 10;
+    const passwordHash = bcrypt.hashSync(password, saltRounds);
 
-    // console.log(passwordHash);
+    user.password = passwordHash;
 
     const newUser = new User(user);
 
     newUser.save().then((user) => {
-        res.json({ message: "User created successfully"});
+        res.json({ message: "User created successfully" });
     }).catch((err) => {
-        res.json({ message: "User creation failed"});
+        res.json({ message: "User creation failed" });
     });
 }
 
@@ -35,28 +35,36 @@ export function postUser(req, res) {
 export function loginUser(req, res) {
     const credentials = req.body;
 
-    User.findOne({ email: credentials.email, password: credentials.password }).then((user) => {
+    User.findOne({ email: credentials.email }).then((user) => {
         if (user == null) {
-            return res.status(404).json({ 
-                message: "User not found" 
+            return res.status(404).json({
+                message: "User not found"
             });
-        }else{
+        } else {
 
-            const payload = {
-                id: user._id,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                type: user.type
-            };
-            console.log(payload);
-            const token = jwt.sign(payload, "secretkey", { expiresIn: "48h" });
+            const isPasswordValid = bcrypt.compareSync(credentials.password, user.password);
 
-            res.json({
-                message: "User logged in successfully",
-                user: payload,
-                token: token
-            });
+            if (!isPasswordValid) {
+                res.status(403).json({
+                    message: 'Incorrect password',
+                });
+            } else {
+                const payload = {
+                    id: user._id,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    type: user.type,
+                };
+
+                const token = jwt.sign(payload, 'secretkey', { expiresIn: '48h' });
+
+                res.json({
+                    message: 'User found',
+                    user: user,
+                    token: token,
+                });
+            }
         }
     });
 }

@@ -27,7 +27,7 @@ export const getGalleryItemById = async (req, res) => {
 // Create a new gallery item
 export function createGalleryItem (req, res){
 
-    const user = req.body.user;
+    const user = req.user;
 
     //check if user is logged in
     if(user == null){
@@ -36,7 +36,7 @@ export function createGalleryItem (req, res){
     }
 
     //check if user is admin
-    if(user.type != "user"){
+    if(user.type != "admin"){
         res.status(403).json({ message: 'you are not authorized to add gallery item'});
         return;
     }
