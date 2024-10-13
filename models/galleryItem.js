@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
+console.log("galleryItem model");
 
 const galleryItemSchema = mongoose.Schema({
     name : {
         type : String,
-        required : true
+        required : true,
+        unique : true
     },
     image : {
         type : String,

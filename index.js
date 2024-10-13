@@ -14,28 +14,29 @@ app.use(bodyParser.json());
 const connectionString = "mongodb+srv://user:1234@cluster0.hfstw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 //middleware for token verification (authentication middleware)
-// app.use((req, res, next) => {
-//     console.log("33333333333333333");
+app.use((req, res, next) => {
 
-//     const token = req.headers["authorization"]?.replace("Bearer ", "");
+    const token = req.headers["authorization"]?.replace("Bearer ", "");
 
 
-//     if (token == null) {
-//         jwt.verify(token, "secretkey", (err, decoded) => {
-//             if (decoded == null) {
-//                 req.body.user = decoded;
-//                 next();
-//                 console.log("1111111111Token verified");
-//             } else {
-//                 next();
-//                 console.log("2222222222Token verified");
-//             }
-//         });
-//     }
+    if (token != null) {
+        jwt.verify(token, "secretkey", (err, decoded) => {
+            if (decoded != null) {
+                req.body.user = decoded;
+                console.log(decoded);
+                
+                next();
+            } else {
+                next();
+            }
+        });
+    }else{
+        next();
+    }
 
-// });
+});
 
-//mongoose connection with mongoDB
+
 mongoose.connect(connectionString).then(
     () => {
         console.log("Connected to MongoDB");

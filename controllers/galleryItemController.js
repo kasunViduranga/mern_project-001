@@ -27,11 +27,23 @@ export const getGalleryItemById = async (req, res) => {
 // Create a new gallery item
 export function createGalleryItem (req, res){
 
-    console.log("66666666666666666");
-    
+    const user = req.body.user;
 
-    const galleryItem = req.body;
+    //check if user is logged in
+    if(user == null){
+        res.status(403).json({ message: 'please login to add gallery item'});
+        return;
+    }
+
+    //check if user is admin
+    if(user.type != "user"){
+        res.status(403).json({ message: 'you are not authorized to add gallery item'});
+        return;
+    }
+
+    const galleryItem = req.body.item;
     const newGalleryItem = new GalleryItem(galleryItem);
+    
     newGalleryItem.save().then((galleryItem) => {
         res.json({ message: "Gallery item created successfully"});
     }).catch((err) => {

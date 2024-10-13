@@ -49,10 +49,12 @@ export function loginUser(req, res) {
                 lastName: user.lastName,
                 type: user.type
             };
+            console.log(payload);
             const token = jwt.sign(payload, "secretkey", { expiresIn: "48h" });
+
             res.json({
                 message: "User logged in successfully",
-                user: user,
+                user: payload,
                 token: token
             });
         }
