@@ -5,13 +5,16 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import galleryItemRouter from "./routes/galleryItemRoute.js";
 import categoryRouter from "./routes/categoryRoute.js";
+import dotenv from "dotenv";
+dotenv.config();
+
 const app = express();
 
 // Middleware (body eke thiyena ewa piliwelakata(encrypted ewa) hadanawa)
 app.use(bodyParser.json());
 
 //mongoDB Database Connection
-const connectionString = "mongodb+srv://user:1234@cluster0.hfstw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const connectionString = process.env.MONGO_URL;
 
 //middleware for token verification (authentication middleware)
 app.use((req, res, next) => {
@@ -20,7 +23,7 @@ app.use((req, res, next) => {
 
 
     if (token != null) {
-        jwt.verify(token, "secretkey", (err, decoded) => {
+        jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
             if (decoded != null) {
                 req.user = decoded;
                 
