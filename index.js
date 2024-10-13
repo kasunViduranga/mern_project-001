@@ -4,7 +4,7 @@ import userRouter from "./routes/usersRoute.js";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import galleryItemRouter from "./routes/galleryItemRoute.js";
-
+import categoryRouter from "./routes/categoryRoute.js";
 const app = express();
 
 // Middleware (body eke thiyena ewa piliwelakata(encrypted ewa) hadanawa)
@@ -47,6 +47,8 @@ app.use("/api/users", userRouter);
 //galleryItemRouter
 app.use("/api/gallery", galleryItemRouter);
 
+//categoryRouter
+app.use("/api/category", categoryRouter);
 
 
 app.listen(3000, () => {
