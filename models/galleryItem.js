@@ -3,8 +3,7 @@ import mongoose from "mongoose";
 const galleryItemSchema = mongoose.Schema({
     name : {
         type : String,
-        required : true,
-        unique : true
+        required : true
     },
     image : {
         type : String,

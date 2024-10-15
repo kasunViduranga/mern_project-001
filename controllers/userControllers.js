@@ -56,7 +56,7 @@ export function loginUser(req, res) {
                     email: user.email,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    type: user.type
+                    type: user.type,
                 };
 
                 const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '48h' });
@@ -88,4 +88,17 @@ export function updateUser(req, res) {
 
 export function deleteUser(req, res) {
     res.json({ message: "Hello World - delete" });
+}
+
+//Admin Validation
+export function isAdminValid(req) {
+
+    if (req.user == null) {
+        return false
+    }
+    if (req.user.type != "admin") {
+        return false
+    }
+    return true;
+
 }
