@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import galleryItemRouter from "./routes/galleryItemRoute.js";
 import categoryRouter from "./routes/categoryRoute.js";
 import dotenv from "dotenv";
+import roomRouter from "./routes/roomRoute.js";
 dotenv.config();
 
 const app = express();
@@ -52,6 +53,9 @@ app.use("/api/gallery", galleryItemRouter);
 
 //categoryRouter
 app.use("/api/category", categoryRouter);
+
+//RoomRouter
+app.use("/api/category", roomRouter);
 
 
 app.listen(3000, () => {
