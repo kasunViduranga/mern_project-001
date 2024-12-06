@@ -11,25 +11,25 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     firstName : {
-        type: String,
-        required: true
+        type: String
     },
     lastName : {
-        type: String,
-        required: true
+        type: String
     },
     type : {
         type: String,
         required: true,
-        default: "user"
+        default: "customer"
     },
     whatsapp : {
+        type: String
+    },
+    image : {
         type: String,
-        required: true
+        default: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/800px-User_icon_2.svg.png"
     },
     phone : {
-        type: String,
-        required: true
+        type: String
     },
     disabled : {
         type: Boolean,

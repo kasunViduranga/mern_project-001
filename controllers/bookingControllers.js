@@ -1,7 +1,7 @@
 import Booking from "../models/booking.js";
 import { isCustomerValid } from "./userControllers.js";
 
-export function createBooking(req,res){
+export function createBooking(req,res){ 
 
   if(!isCustomerValid(req)){
     res.status(403).json({

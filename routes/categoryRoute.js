@@ -1,23 +1,18 @@
 import express from "express";
-import {createCategory, deleteCategory, getCategory, getCategoryByName, updateCategory} from "../controllers/categoryController.js";
-const categoryRouter = express. Router();
+import { getCategories, addCategory, updateCategory, deleteCategory, } from "../controllers/categoryController.js";
 
-categoryRouter.post("/", createCategory)
+const router = express.Router();
 
-categoryRouter.delete("/:name",deleteCategory)
+// Route to get categories with pagination
+router.post("/all", getCategories);
 
+// Route to create a new category
+router.post("/", addCategory);
 
+// Route to update a category by id
+router.put("/:id", updateCategory);
 
-categoryRouter.get("/searchByPrice", (req,res)=>{
-  res.json({
-    message : "searchByPrice"
-  })
-})
+// Route to delete a category by id
+router.delete("/:id", deleteCategory);
 
-categoryRouter.get("/:name",getCategoryByName);
-
-categoryRouter.get("/",getCategory);
-
-//category update router
-categoryRouter.put("/:name",updateCategory);
-export default categoryRouter;
+export default router;

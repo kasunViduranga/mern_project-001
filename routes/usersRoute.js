@@ -1,19 +1,25 @@
 import express from "express";
-import { getUsers, postUser, updateUser, deleteUser, loginUser } from "../controllers/userControllers.js";
+import { postUser, updateUser, deleteUser, loginUser, getUser ,getAllUsers, createAdmin } from "../controllers/userControllers.js";
 
 const userRouter = express.Router();
 
-//get all users
-userRouter.get("/", getUsers);
+//get users
+userRouter.get("/", getUser);
 
-//create user
+//get all users
+userRouter.post("/all",getAllUsers);
+
+//signup user
 userRouter.post("/", postUser);
+
+//create in admin panel user
+userRouter.post("/newuser", createAdmin);
 
 //update user
 userRouter.put("/", updateUser);
 
 //delete user
-userRouter.delete("/", deleteUser);
+userRouter.delete("/delete/:id", deleteUser);
 
 //user login
 userRouter.post("/login", loginUser);
